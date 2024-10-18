@@ -4,19 +4,26 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'npm run build && npm run start'",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "node --loader=ts-node/esm --env-file=.env --watch src/index.ts",
+    "build": "npx tsc",
+    "start": "node --env-file=.env dist/index.js"
   },
   "author": "Google LLC",
   "license": "Apache-2.0",
   "dependencies": {
-    "express": "^4.19.2"
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "express": "^4.19.2",
+    "pg": "^8.13.0"
   },
   "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.12.12",
+    "@types/pg": "^8.11.10",
     "nodemon": "^3.1.0",
-    "typescript": "^5.4.5",
-    "@types/node": "^20.12.12"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }
