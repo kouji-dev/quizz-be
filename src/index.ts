@@ -1,5 +1,5 @@
 import express from 'express';
-import {db} from './db.ts'
+import {db} from './db'
 import { sql } from 'drizzle-orm';
 const app = express();
 

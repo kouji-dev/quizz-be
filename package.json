@@ -4,9 +4,8 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "dev": "node --loader=ts-node/esm --env-file=.env --watch src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node src/index.ts'",
     "build": "npx tsc",
     "start": "node --env-file=.env dist/index.js"
   },
