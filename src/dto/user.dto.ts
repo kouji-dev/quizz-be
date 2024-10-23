@@ -1,8 +1,8 @@
 export class UserDTO {
     google_id: string;
     email: string;
-    name?: string;
+    name: string | null;
     avatar_url?: string;
-    exam_id?: number;
+    exam_id?: number | null;
   }
   

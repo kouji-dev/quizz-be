@@ -9,4 +9,3 @@ export const exams = pgTable('exams', {
   avatar_url: text('avatar_url'),
 });
 
-export type Exam = typeof exams.$inferInsert;

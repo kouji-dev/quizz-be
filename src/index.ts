@@ -1,7 +1,9 @@
 import express from 'express';
 import session from 'express-session';
-import authRoutes from './routes/auth';
-import userRoutes from './routes/user';
+import authRoutes from './routes/auth.route';
+import userRoutes from './routes/user.route';
+import examRoutes from './routes/user.route';
+
 import {db} from './db/database';
 import { sql } from 'drizzle-orm';
 import passport from 'passport';
@@ -31,10 +33,10 @@ app.use('/auth', authRoutes);
 // Utiliser les routes pour gérer les utilisateurs et les examens
 app.use('/api', userRoutes);
 
+app.use('/api', examRoutes);
+
+
 // Démarrer le serveur
-app.listen(3000, () => {
-  console.log('Serveur démarré sur http://localhost:3000');
-});
 
 
 // app.get('/', async (req, res) => {
@@ -44,7 +46,7 @@ app.listen(3000, () => {
 // });
 
 
-const port = parseInt(process.env.PORT || '3000');
+const port = parseInt(process.env.PORT || '3001');
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });

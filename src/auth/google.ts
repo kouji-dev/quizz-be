@@ -30,9 +30,11 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.select().from(users).where(eq(users.id, id)).limit(1);
-    done(null, user);
+    const userId = Number(id); // Convertir l'ID en nombre
+    const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    done(null, user[0]); // Utiliser le premier élément du tableau
   } catch (error) {
     done(error);
   }
 });
+
