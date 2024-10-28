@@ -1,13 +1,15 @@
 import express from 'express';
 import { UserService } from '../services/user.service';
 import { UpdateUserExamDTO } from '../dto/exam.dto';
+import { jwtIsAuthenticated } from '../middleware/auth.middleware';
+
 
 const router = express.Router();
 const userService = new UserService();
 
 // Middleware pour vérifier si l'utilisateur est authentifié
 const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  if (req.jwtIsAuthenticated()) {
     return next();
   }
   res.redirect('/auth/google');

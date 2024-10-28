@@ -3,7 +3,7 @@ import cors from 'cors';
 import session from 'express-session';
 import authRoutes from './routes/auth.route';
 import userRoutes from './routes/user.route';
-import examRoutes from './routes/user.route';
+import examRoutes from './routes/exam.route';
 
 import passport from 'passport';
 import './auth/google';
@@ -13,11 +13,11 @@ import './auth/google';
 const app = express();
 
 // Configurer les sessions
-app.use(session({
-  secret: process.env.SESSION_SECRET!,
-  resave: false,
-  saveUninitialized: false,
-}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET!,
+//   resave: false,
+//   saveUninitialized: false,
+// }));
 
 //TODO: add redirects: 'com.quiz.demo', maybe google auth
 app.use(
@@ -29,7 +29,7 @@ app.use(
 
 // Initialiser Passport.js
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
 // Pour traiter les données JSON dans les requêtes
 app.use(express.json());
@@ -43,17 +43,7 @@ app.use('/api', userRoutes);
 app.use('/api', examRoutes);
 
 
-// Démarrer le serveur
-
-
-// app.get('/', async (req, res) => {
-//   const name = process.env.NAME || 'World';
-//   const result = await db.execute(sql`SELECT NOW()`);
-//   res.send(result);
-// });
-
-
-const port = parseInt(process.env.PORT || '3001');
+const port = parseInt(process.env.PORT || '3000');
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
