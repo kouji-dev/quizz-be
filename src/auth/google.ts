@@ -26,9 +26,7 @@ passport.use(
         
         // Générer un JWT après la connexion réussie
         const payload = {
-          id: user.id,
-          email: user.email,
-          name: user.name,
+          user: user
         };
         const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
