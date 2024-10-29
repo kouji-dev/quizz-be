@@ -4,7 +4,7 @@ export class UpdateUserExamDTO {
 
   export class ExamDTO {
     id: number;
-    exam_name: string;
+    name: string;
     description?: string;
     avatar_url?: string;
   }

@@ -7,7 +7,7 @@ export class ExamService {
     const result = await db.select().from(exams); // Récupère tous les examens
     return result.map((exam) => ({
       id: exam.id,
-      exam_name: exam.exam_name,
+      name: exam.name,
       description: exam.description,
       avatar_url: exam.avatar_url,
     }));
