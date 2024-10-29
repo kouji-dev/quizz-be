@@ -11,8 +11,6 @@ dotenv.config();
 
 const userService = new UserService();
 
-
-
 passport.use(
   new GoogleStrategy(
     {
@@ -23,15 +21,9 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         const user = await userService.findOrCreateUser(profile);
-        
-        // Générer un JWT après la connexion réussie
-        const payload = {
-          user: user
-        };
-        const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
         // Retourner le token comme partie de l'utilisateur
-        return done(null, { user, token });
+        return done(null, user);
       } catch (error) {
         return done(error);
       }
