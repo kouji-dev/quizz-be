@@ -1,17 +1,13 @@
 // src/types/global.d.ts
 
-import { User as PassportUser } from 'passport';
+declare namespace Express {
+  interface User {
+    id: number;
+    email: string;
+    name?: string;
+  }
 
-declare global {
-  namespace Express {
-    interface User extends PassportUser {
-      id: number;
-      email: string;
-      name?: string;
-    }
-
-    interface Request {
-      user?: User | undefined;
-    }
+  interface Request {
+    user?: User;
   }
 }

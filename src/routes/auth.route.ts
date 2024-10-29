@@ -1,35 +1,22 @@
 import passport from 'passport';
-import express, { Request, Response } from 'express';
-
+import express, {Request, Response} from 'express';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
 // Démarrer l'authentification Google
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 // Route de callback après authentification Google
-
-// router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req: any, res) => {
-//     //TODO: send token as queryParam
-//   res.redirect(`com.quiz.demo://?firstName=${req.user.firstName}/lastName=${req.user.lastName}/email=${req.user.email}`); // Redirection après succès
-// });
-
 router.get(
-  '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/', session: false }), // Désactiver les sessions ici
-  (req: any, res) => {
-    const { token, user } = req.user;
-
-    res.json({
-      message: 'Connexion réussie',
-      token,
-      user,
-    });
-  }
+    '/google/callback',
+    passport.authenticate('google', {failureRedirect: '/', session: false}), // Désactiver les sessions ici
+    (req: any, res) => {
+        // Générer un JWT après la connexion réussie
+        const token = jwt.sign(req.user, process.env.JWT_SECRET!, {expiresIn: '1h'});
+        res.redirect(`com.quiz.demo://?token=${token}`); // Redirection après succès
+    }
 );
-
-
-
 
 
 // Route de déconnexion
@@ -38,6 +25,6 @@ router.get('/logout', (req: Request, res: Response, next) => {
       if (err) { return next(err); }
       res.redirect('/');
     });
-  });
+});
 
 export default router;
