@@ -1,9 +1,6 @@
 import passport from 'passport';
-import { db } from '../db/database';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { UserService } from '../services/user.service';
-import { eq } from 'drizzle-orm/expressions';
-import { users } from '../db/schemas/users';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 

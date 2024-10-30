@@ -1,8 +1,6 @@
 import express, { Request } from 'express';
 import { UserService } from '../services/user.service';
 import { UpdateUserExamDTO } from '../dto/exam.dto';
-//import { UserDTO } from '../dto/user.dto';
-import { User } from '../db/schemas/users';
 import { jwtIsAuthenticated } from '../middleware/auth.middleware';
 
 
@@ -19,8 +17,8 @@ const isAuthenticated = (req, res, next) => {
 
 // Route GET pour récupérer le profil de l'utilisateur authentifié
 router.get('/user/profile', jwtIsAuthenticated, async (req: Request, res): Promise<void> => {
-  const userId = req.user.id;
-  console.log(req.user);
+  const userId = req.user?.id;
+  console.log(req.user.id);
 
   if (!userId) {
     res.status(400).json({ message: 'ID utilisateur introuvable.' });

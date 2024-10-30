@@ -3,7 +3,7 @@ CREATE TABLE users (
     google_id TEXT UNIQUE,
     email TEXT UNIQUE,
     first_name TEXT,
-    lastName TEXT,
+    last_name TEXT,
     avatar_url TEXT,
     exam_id INTEGER,
     FOREIGN KEY (exam_id) REFERENCES exams(id)
