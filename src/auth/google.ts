@@ -39,32 +39,3 @@ passport.use(
   )
 );
 
-// // Configurer la stratégie Google OAuth
-// passport.use(new GoogleStrategy({
-//   clientID: process.env.GOOGLE_CLIENT_ID!,
-//   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-//   callbackURL: process.env.GOOGLE_CALLBACK!,
-// }, async (accessToken, refreshToken, profile, done) => {
-//   console.log({profile})
-//   try {
-//     const user = await userService.findOrCreateUser(profile);
-//     return done(null, user);
-//   } catch (error) {
-//     return done(error);
-//   }
-// }));
-
-// passport.serializeUser((user: any, done) => {
-//   done(null, user.id);
-// });
-
-// passport.deserializeUser(async (id, done) => {
-//   try {
-//     const userId = Number(id); // Convertir l'ID en nombre
-//     const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-//     done(null, user[0]); // Utiliser le premier élément du tableau
-//   } catch (error) {
-//     done(error);
-//   }
-// });
-

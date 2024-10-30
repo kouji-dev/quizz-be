@@ -5,7 +5,8 @@ export const users = pgTable('users', {
     id: serial('id').primaryKey().unique(),
     google_id: text('google_id').unique(),
     email: text('email').unique(),
-    name: text('name'),
+    firstName: text('firstName'),
+    lastName: text('lastName'),
     avatar_url: text('avatar_url'),
     exam_id: integer('exam_id').references(() => exams.id) // Clé étrangère nullable
   });

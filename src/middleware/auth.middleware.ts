@@ -2,6 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { UserDTO } from '../dto/user.dto';
 
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: Partial<UserDTO>; // Pour permettre `id`, `email`, etc.
+  }
+}
+
 export const jwtIsAuthenticated = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
 

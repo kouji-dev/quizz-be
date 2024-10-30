@@ -20,6 +20,7 @@ const isAuthenticated = (req, res, next) => {
 // Route GET pour récupérer le profil de l'utilisateur authentifié
 router.get('/user/profile', jwtIsAuthenticated, async (req: Request, res): Promise<void> => {
   const userId = req.user.id;
+  console.log(req.user);
 
   if (!userId) {
     res.status(400).json({ message: 'ID utilisateur introuvable.' });
@@ -47,8 +48,8 @@ router.get('/user/profile', jwtIsAuthenticated, async (req: Request, res): Promi
 
 
 // Route PUT pour associer un examen à un utilisateur
-router.put('/users/exam', jwtIsAuthenticated, async (req, res): Promise<void> => {
-  const userId = req.user?.id; // Récupérer l'ID de l'utilisateur à partir du token JWT
+router.put('/user/exam', jwtIsAuthenticated, async (req, res): Promise<void> => {
+  const userId = req.user?.id; 
 
   if (!userId) {
     res.status(400).json({ message: 'ID utilisateur introuvable.' });
