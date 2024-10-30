@@ -1,5 +1,9 @@
 import passport from 'passport';
 import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 const router = express.Router();
@@ -16,18 +20,25 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/', session: false }), // Désactiver les sessions ici
+  passport.authenticate('google', { failureRedirect: '/', session: false }),
   (req: any, res) => {
-    const { token, user } = req.user;
+    const token = jwt.sign(req.user, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
-    res.json({
-      message: 'Connexion réussie',
-      token,
-      user,
-    });
+    // Vérifier si la requête est envoyée depuis une application mobile
+    const isMobileApp = req.headers['user-agent']?.includes('Mobile') || req.query.isMobile === 'true';
+
+    if (isMobileApp) {
+      // Redirection vers l'application mobile avec le token
+      res.redirect(`com.quiz.demo://?token=${token}`);
+    } else {
+      // Répondre en JSON pour les navigateurs web
+      res.json({
+        message: 'Connexion réussie',
+        user: req.user,
+      });
+    }
   }
 );
-
 
 
 
