@@ -7,7 +7,7 @@ declare global {
     interface User extends PassportUser {
       id: number;
       email: string;
-      firstName?: string;
+      first_name?: string;
     }
 
     interface Request {

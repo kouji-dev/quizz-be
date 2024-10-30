@@ -13,8 +13,8 @@ export class UserService {
       const newUser: typeof users.$inferInsert = {
         google_id: profile.id,
         email: profile.emails[0].value,
-        firstName: profile.name?.givenName || null, // Utilise givenName pour le prénom
-        lastName: profile.name?.familyName || null, // Utilise familyName pour le nom de famille
+        first_name: profile.name?.givenName || null, // Utilise givenName pour le prénom
+        last_name: profile.name?.familyName || null, // Utilise familyName pour le nom de famille
         avatar_url: profile.photos ? profile.photos[0].value : undefined,
         exam_id: null as number | null,
       };
@@ -30,7 +30,7 @@ export class UserService {
       .update(users)
       .set({ exam_id: examData.exam_id })
       .where(eq(users.id, userId))
-      .returning({ id: users.id, exam_id: users.exam_id, email: users.email, firstName: users.firstName,lastName: users.lastName ,avatar_url: users.avatar_url, google_id: users.google_id }); // Préciser les champs à retourner
+      .returning({ id: users.id, exam_id: users.exam_id, email: users.email, first_name: users.first_name,last_name: users.last_name ,avatar_url: users.avatar_url, google_id: users.google_id }); // Préciser les champs à retourner
 
     return updatedUser[0];
   }

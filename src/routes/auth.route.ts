@@ -11,7 +11,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 // router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req: any, res) => {
 //     //TODO: send token as queryParam
-//   res.redirect(`com.quiz.demo://?firstName=${req.user.firstName}/lastName=${req.user.lastName}/email=${req.user.email}`); // Redirection après succès
+//   res.redirect(`com.quiz.demo://?first_name=${req.user.first_name}/last_name=${req.user.last_name}/email=${req.user.email}`); // Redirection après succès
 // });
 
 router.get(
