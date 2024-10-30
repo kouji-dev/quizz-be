@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { application } from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import authRoutes from './routes/auth.route';
 import userRoutes from './routes/user.route';
 import examRoutes from './routes/exam.route';
+import categoryRoutes from './routes/category.route';
 
 import passport from 'passport';
 import './auth/google';
@@ -34,13 +35,13 @@ app.use(passport.initialize());
 // Pour traiter les données JSON dans les requêtes
 app.use(express.json());
 
-// Utiliser les routes d'authentification
 app.use('/auth', authRoutes);
 
-// Utiliser les routes pour gérer les utilisateurs et les examens
 app.use('/api', userRoutes);
 
 app.use('/api', examRoutes);
+
+app.use('/api', categoryRoutes);
 
 
 const port = parseInt(process.env.PORT || '3000');

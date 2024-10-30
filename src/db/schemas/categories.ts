@@ -1,11 +1,11 @@
 // db/schema.js
-import { pgTable, serial, text, integer } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, integer, json } from 'drizzle-orm/pg-core';
 import { exams } from './exams';
 
 export const categories = pgTable('categories', {
   id: serial('id').primaryKey(),
   exam_id: integer('exam_id').references(() => exams.id),
   name: text('name').notNull(),
-  description: text('description'), // Nouvelle colonne pour la description
-  avatar_url: text('avatar_url'), // Colonne pour l'avatar
+  description: text('description'),
+  styles: json('styles'),
 });
