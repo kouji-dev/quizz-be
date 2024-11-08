@@ -15,7 +15,72 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/auth/google');
 };
 
-// Route GET pour récupérer le profil de l'utilisateur authentifié
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: Gestion des utilisateurs
+ */
+
+/**
+ * @swagger
+ * /user/profile:
+ *   get:
+ *     summary: Récupère le profil de l'utilisateur authentifié
+ *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []  # Nécessite un token JWT pour l'authentification
+ *     responses:
+ *       200:
+ *         description: Profil de l'utilisateur authentifié.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: Identifiant de l'utilisateur
+ *                 name:
+ *                   type: string
+ *                   description: Nom de l'utilisateur
+ *                 email:
+ *                   type: string
+ *                   description: Email de l'utilisateur
+ *                 exam_id:
+ *                   type: integer
+ *                   description: ID de l'examen associé à l'utilisateur
+ *       400:
+ *         description: ID utilisateur introuvable.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "ID utilisateur introuvable."
+ *       404:
+ *         description: Utilisateur non trouvé.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Utilisateur non trouvé."
+ *       500:
+ *         description: Erreur lors de la récupération du profil.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Erreur lors de la récupération du profil."
+ */
 router.get('/user/profile', jwtIsAuthenticated, async (req: Request, res): Promise<void> => {
   const userId = req.user?.id;
  
@@ -44,8 +109,65 @@ router.get('/user/profile', jwtIsAuthenticated, async (req: Request, res): Promi
 });
 
 
-
-// Route PUT pour associer un examen à un utilisateur
+/**
+ * @swagger
+ * /user/exam:
+ *   put:
+ *     summary: Associe un examen à l'utilisateur authentifié
+ *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []  # Nécessite un token JWT pour l'authentification
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               examId:
+ *                 type: integer
+ *                 description: ID de l'examen à associer
+ *     responses:
+ *       200:
+ *         description: Examen mis à jour pour l'utilisateur authentifié.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: Identifiant de l'utilisateur
+ *                 name:
+ *                   type: string
+ *                   description: Nom de l'utilisateur
+ *                 email:
+ *                   type: string
+ *                   description: Email de l'utilisateur
+ *                 exam_id:
+ *                   type: integer
+ *                   description: ID de l'examen associé à l'utilisateur
+ *       400:
+ *         description: ID utilisateur introuvable.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "ID utilisateur introuvable."
+ *       500:
+ *         description: Erreur lors de la mise à jour de l'examen.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Erreur lors de la mise à jour de l'examen."
+ */
 router.put('/user/exam', jwtIsAuthenticated, async (req, res): Promise<void> => {
   const userId = req.user?.id; 
 

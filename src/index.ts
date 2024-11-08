@@ -1,10 +1,11 @@
 import express, { application } from 'express';
 import cors from 'cors';
-import session from 'express-session';
 import authRoutes from './routes/auth.route';
 import userRoutes from './routes/user.route';
 import examRoutes from './routes/exam.route';
 import categoryRoutes from './routes/category.route';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger';
 
 import passport from 'passport';
 import './auth/google';
@@ -34,6 +35,8 @@ app.use(passport.initialize());
 
 // Pour traiter les données JSON dans les requêtes
 app.use(express.json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/auth', authRoutes);
 

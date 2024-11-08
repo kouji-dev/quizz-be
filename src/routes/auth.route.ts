@@ -20,10 +20,58 @@ const verifyAndDecodeToken = (token: string, secret: string): any => {
   return typeof decoded === 'object' && 'user' in decoded ? (decoded as any).user : decoded;
 };
 
-// Démarrer l'authentification Google
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Routes pour l'authentification
+ */
+
+/**
+ * @swagger
+ * /auth/google:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Authentification via Google
+ *     description: Redirige l'utilisateur vers Google pour l'authentification.
+ *     responses:
+ *       302:
+ *         description: Redirection vers Google pour l'authentification.
+ */
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Route de callback après authentification Google
+/**
+ * @swagger
+ * /auth/google/callback:
+ *   get:
+ *     summary: Callback pour l'authentification Google
+ *     tags: [Auth]
+ *     description: Callback pour gérer la réponse après l'authentification Google.
+ *     responses:
+ *       200:
+ *         description: Succès de la connexion.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Connexion réussie"
+ *                 accessToken:
+ *                   type: string
+ *                 refreshToken:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                     google_id:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ */
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/', session: false }),
@@ -51,6 +99,38 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * /auth/refresh-token:
+ *   post:
+ *     summary: Rafraîchir le token d'accès
+ *     tags: [Auth]
+ *     description: Utilise un token de rafraîchissement pour générer un nouveau token d'accès.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: Le token de rafraîchissement
+ *     responses:
+ *       200:
+ *         description: Nouveau token d'accès généré avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *       401:
+ *         description: Token de rafraîchissement manquant.
+ *       403:
+ *         description: Token de rafraîchissement invalide ou expiré.
+ */
 router.post('/refresh-token', (req: Request, res: Response) => {
   const { refreshToken } = req.body;
 
@@ -79,7 +159,17 @@ router.post('/refresh-token', (req: Request, res: Response) => {
   }
 });
 
-// Route de déconnexion
+/**
+ * @swagger
+ * /auth/logout:
+ *   get:
+ *     summary: Déconnexion
+ *     tags: [Auth]
+ *     description: Déconnecte l'utilisateur et redirige vers la page d'accueil.
+ *     responses:
+ *       302:
+ *         description: Redirection vers la page d'accueil après la déconnexion.
+ */
 router.get('/logout', (req: Request, res: Response, next) => {
   req.logout((err) => {
     if (err) {
