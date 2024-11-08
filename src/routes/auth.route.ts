@@ -35,8 +35,11 @@ router.get(
 
     if (isMobileApp) {
       // Redirection vers l'application mobile avec le token d'accès et de refresh
-      res.redirect(`com.quiz.demo://?access_token=${accessToken}&refresh_token=${refreshToken}`);
-    } else {
+      const loginLink = process.env.APP_LOGIN_LINK!;
+      res.redirect('${loginLink}?access_token=${accessToken}&refresh_token=${refreshToken}');
+    } 
+
+    else {
       // Répondre en JSON pour les navigateurs web
       res.json({
         message: 'Connexion réussie',
